@@ -1,8 +1,8 @@
-# CMP305-Voxels
+CMP305-Voxels
 ## Procedural Methods
 # LAB 6: DUNGEON GENERATION
-## Gaz Robinson
-## School of Design and Informatics
+**Gaz Robinson**
+**School of Design and Informatics**
 # Introduction
 This week’s lab looks at some of the techniques involved in dungeon generation: Space Partitioning, Cellular Automata and Agent Based Generation!
 
