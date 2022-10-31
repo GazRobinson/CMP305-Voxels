@@ -15,12 +15,11 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	textureMgr->loadTexture(L"grass", L"res/grass.png");
 
 	// Create Mesh object and shader object
-	m_InstancedCube.reset( new InstancedCubeMesh(renderer->getDevice(), renderer->getDeviceContext(), 1));
-	m_InstanceShader.reset(new InstanceShader(renderer->getDevice(), hwnd));
-	m_LightShader.reset(new LightShader(renderer->getDevice(), hwnd));
+	m_InstancedCube = std::make_unique<InstancedCubeMesh>(renderer->getDevice(), renderer->getDeviceContext(), 1);
+	m_InstanceShader = std::make_unique<InstanceShader>(renderer->getDevice(), hwnd);
 
 	// Initialise light
-	light.reset(new Light());
+	light = std::make_unique<Light>();
 	light->setDiffuseColour(0.8f, 0.8f, 0.8f, 1.0f);
 	light->setAmbientColour(0.1f, 0.1f,0.1f, 1.0f);
 	light->setDirection(-0.578f, -0.578f, 0.1f);
@@ -60,7 +59,6 @@ bool App1::frame()
 	return true;
 }
 void App1::BuildCubeInstances() {
-
 	constexpr int width = 64;
 	constexpr int maxCubes = width * width * width;
 
@@ -68,23 +66,23 @@ void App1::BuildCubeInstances() {
 	vector<XMFLOAT2> uvs;
 
 	int instanceCount = 0;
-	//Loop through our scalar field
-	//Create two crossing sine waves and only draw the cubes that are under the "height" value
+
+	//Loop through every possible point within our voxel space and see if it should be added to our instance list
 	for (int i = 0; i < maxCubes; i++) {
 		const int x = i % width;
 		const int y = ((i / width) % width);
 		const int z = (i / (width * width));
 
-		float y1 = sin((float)(x) / 8.0f);
-		y1 += 1.0f;
-		y1 *= 16.f;
+		//Create two crossing sine waves
+		const float y1 = (sin((float)(x) / 8.0f) + 1.0f) * 16.0f;
+		const float y2 = (sin((float)(z) / 4.0f) + 1.0f) * 16.0f;
 
-		float y2 = sin((float)(z) / 4.0f);
-		y2 += 1.0f;
-		y2 *= 16.f;
-
+		//If the current voxel is below both sin waves
 		if (y < y1 && y < y2) {
+			//Add it to our list voxels to draw
 			positions.push_back( XMFLOAT3(2.0f * x, 2.0f * y, 2.0f * z));
+
+			//Add a UV offset so we can draw different textures
 			if ((y+1 < y1 && y+1 < y2)) {
 				//Is not on top				
 				uvs.push_back(XMFLOAT2{ 0.5,0.0 });
@@ -100,7 +98,7 @@ void App1::BuildCubeInstances() {
 		}
 	}
 
-	m_InstancedCube->initBuffers(renderer->getDevice(), &(positions.front()), &(uvs.front()), instanceCount);
+	m_InstancedCube->initBuffers(renderer->getDevice(), positions.data(), uvs.data(), instanceCount);
 }
 
 bool App1::render()
@@ -150,4 +148,3 @@ void App1::gui()
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
-

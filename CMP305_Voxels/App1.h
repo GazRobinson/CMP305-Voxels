@@ -7,7 +7,6 @@
 #include "InstanceShader.h"
 #include "LightShader.h"
 #include "InstancedCubeMesh.h"
-#include "QuadMeshT.h"
 #include <memory>
 
 using std::unique_ptr;
@@ -28,12 +27,11 @@ protected:
 
 private:
 	void BuildCubeInstances();
-	void BuildTreeRooms();
 
+private:
 	unique_ptr<InstanceShader> m_InstanceShader;
 	unique_ptr<InstancedCubeMesh> m_InstancedCube;
 
-	unique_ptr<LightShader> m_LightShader;
 	unique_ptr<Light> light;
 };
 

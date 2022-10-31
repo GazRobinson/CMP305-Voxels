@@ -56,7 +56,7 @@ void InstancedCubeMesh::initBuffers( ID3D11Device* device, XMFLOAT3* p, XMFLOAT2
 	instanceBufferDesc.StructureByteStride = 0;
 
 	// Give the subresource structure a pointer to the instance data.
-	instanceData.pSysMem = &(instances.front());
+	instanceData.pSysMem = instances.data();
 	instanceData.SysMemPitch = 0;
 	instanceData.SysMemSlicePitch = 0;
 
