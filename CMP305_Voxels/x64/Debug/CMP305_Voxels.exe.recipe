@@ -2,21 +2,21 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\x64\Debug\CMP305_Voxels.exe</FullPath>
+      <FullPath>D:\Repos\CMP305-Voxels\x64\Debug\CMP305_Voxels.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\instance_ps.cso</FullPath>
+      <FullPath>D:\Repos\CMP305-Voxels\CMP305_Voxels\instance_ps.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\instance_vs.cso</FullPath>
+      <FullPath>D:\Repos\CMP305-Voxels\CMP305_Voxels\instance_vs.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\light_ps.cso</FullPath>
+      <FullPath>D:\Repos\CMP305-Voxels\CMP305_Voxels\light_ps.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\light_vs.cso</FullPath>
+      <FullPath>D:\Repos\CMP305-Voxels\CMP305_Voxels\light_vs.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

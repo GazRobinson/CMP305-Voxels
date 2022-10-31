@@ -3,7 +3,7 @@
 #include "camera.h"
 
 // Configure defaul camera (including positions, rotation and ortho matrix)
-Camera::Camera()
+Camera::Camera():moveSpeed{20}
 {
 	position = XMFLOAT3(0.f, 0.f, 0.f);
 	rotation = XMFLOAT3(0.f, 0.f, 0.f);
@@ -98,15 +98,12 @@ void Camera::moveForward()
 {
 	float radians;
 
-	// Update the forward movement based on the frame time
-	speed = frameTime * 5.f;
-	
 	// Convert degrees to radians.
 	radians = rotation.y * 0.0174532f;
 
 	// Update the position.
-	position.x += sinf(radians) * speed;
-	position.z += cosf(radians) * speed;
+	position.x += sinf(radians) * frameTime * moveSpeed;
+	position.z += cosf(radians) * frameTime * moveSpeed;
 }
 
 
@@ -114,35 +111,26 @@ void Camera::moveBackward()
 {
 	float radians;
 
-	// Update the backward movement based on the frame time
-	speed = frameTime * 5.f;// *0.5f;
-
 	// Convert degrees to radians.
 	radians = rotation.y * 0.0174532f;
 
 	// Update the position.
-	position.x-= sinf(radians) * speed;
-	position.z -= cosf(radians) * speed;
+	position.x-= sinf(radians) * frameTime * moveSpeed;
+	position.z -= cosf(radians) * frameTime * moveSpeed;
 }
 
 
 void Camera::moveUpward()
-{
-	// Update the upward movement based on the frame time
-	speed = frameTime * 5.f;// *0.5f;
-	
+{	
 	// Update the height position.
-	position.y += speed;
+	position.y += moveSpeed * frameTime;
 }
 
 
 void Camera::moveDownward()
 {
-	// Update the downward movement based on the frame time
-	speed = frameTime * 5.f;// *0.5f;
-
 	// Update the height position.
-	position.y -= speed;
+	position.y -= moveSpeed * frameTime;
 }
 
 
@@ -224,14 +212,14 @@ void Camera::strafeRight()
 	float radians;
 
 	// Update the forward movement based on the frame time
-	speed = frameTime * 5.f;
+	speed =  5.f;
 
 	// Convert degrees to radians.
 	radians = rotation.y * 0.0174532f;
 
 	// Update the position.
-	position.z -= sinf(radians) * speed;
-	position.x += cosf(radians) * speed;
+	position.z -= sinf(radians) * frameTime * moveSpeed;
+	position.x += cosf(radians) * frameTime * moveSpeed;
 
 }
 
@@ -246,6 +234,6 @@ void Camera::strafeLeft()
 	radians = rotation.y * 0.0174532f;
 
 	// Update the position.
-	position.z += sinf(radians) * speed;
-	position.x -= cosf(radians) * speed;
+	position.z += sinf(radians) * frameTime * moveSpeed;
+	position.x -= cosf(radians) * frameTime * moveSpeed;
 }

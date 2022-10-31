@@ -1,20 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (CMP305_Base.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  compilation object save succeeded; see D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\instance_ps.cso
-  compilation object save succeeded; see D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\instance_vs.cso
-  compilation object save succeeded; see D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\light_ps.cso
-  compilation object save succeeded; see D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\light_vs.cso
-  App1.cpp
-  InstancedCubeMesh.cpp
-D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\InstancedCubeMesh.cpp(39,10): warning C4244: 'initializing': conversion from 'double' to 'UINT', possible loss of data
   InstanceShader.cpp
-D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\InstanceShader.cpp(41,27): warning C4101: 'polygonLayout': unreferenced local variable
-  LightShader.cpp
-  Main.cpp
-  QuadMeshT.cpp
-D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\QuadMeshT.cpp(54,67): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
-D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\CMP305_Voxels\QuadMeshT.cpp(68,59): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
-  Generating Code...
-DXFramework.lib(WICTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DXFramework.lib(WICTextureLoader.obj)' or at 'D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
-DXFramework.lib(pch.obj) : warning LNK4099: PDB '' was not found with 'DXFramework.lib(pch.obj)' or at ''; linking object as if no debug info
-DXFramework.lib(DDSTextureLoader.obj) : warning LNK4099: PDB 'DirectXTK.pdb' was not found with 'DXFramework.lib(DDSTextureLoader.obj)' or at 'D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\x64\Debug\DirectXTK.pdb'; linking object as if no debug info
-  CMP305_Voxels.vcxproj -> D:\Work\Abertay\CMP305\06_Dungeons\CMP305_Voxels_Example_2021\CMP305_Voxels\x64\Debug\CMP305_Voxels.exe
+D:\Repos\CMP305-Voxels\CMP305_Voxels\InstanceShader.cpp(41,27): warning C4101: 'polygonLayout': unreferenced local variable
+  CMP305_Voxels.vcxproj -> D:\Repos\CMP305-Voxels\x64\Debug\CMP305_Voxels.exe

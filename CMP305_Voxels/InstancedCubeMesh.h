@@ -17,6 +17,7 @@ class InstancedCubeMesh : public CubeMesh {
 	//Currently only position, but scale and rotation could also be passed through
 	struct InstanceType {
 		XMFLOAT3 position;
+		XMFLOAT2 uv;
 	};
 
 public:
@@ -25,7 +26,7 @@ public:
 
 	int GetInstanceCount();
 
-	void initBuffers( ID3D11Device* device, XMFLOAT3* p, UINT count );
+	void initBuffers( ID3D11Device* device, XMFLOAT3* p, XMFLOAT2* uv, UINT count);
 	void sendDataInstanced( ID3D11DeviceContext* deviceContext, D3D_PRIMITIVE_TOPOLOGY top = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
 protected:

@@ -11,7 +11,7 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	BaseApplication::init(hinstance, hwnd, screenWidth, screenHeight, in, VSYNC, FULL_SCREEN);
 
 	// Load textures
-	textureMgr->loadTexture(L"brick", L"res/Brick2.png");
+	textureMgr->loadTexture(L"block", L"res/BlockTex.png");
 	textureMgr->loadTexture(L"grass", L"res/grass.png");
 
 	// Create Mesh object and shader object
@@ -61,30 +61,46 @@ bool App1::frame()
 }
 void App1::BuildCubeInstances() {
 
-	const int width = 64;
-	const int maxCubes = width * width * width;
+	constexpr int width = 64;
+	constexpr int maxCubes = width * width * width;
 
 	vector<XMFLOAT3> positions;
+	vector<XMFLOAT2> uvs;
 
 	int instanceCount = 0;
+	//Loop through our scalar field
 	//Create two crossing sine waves and only draw the cubes that are under the "height" value
 	for (int i = 0; i < maxCubes; i++) {
-		float y1 = sin((float)(i % width) / 8.0f);
+		const int x = i % width;
+		const int y = ((i / width) % width);
+		const int z = (i / (width * width));
+
+		float y1 = sin((float)(x) / 8.0f);
 		y1 += 1.0f;
 		y1 *= 16.f;
 
-		float y2 = sin((float)(i / (width * width)) / 4.0f);
+		float y2 = sin((float)(z) / 4.0f);
 		y2 += 1.0f;
 		y2 *= 16.f;
 
-		if ((i / width) % width < y1 && (i / width) % width < y2) {
-			positions.push_back( XMFLOAT3(2.0f * (i % width), 2.0f * ((i / width) % width), 2.0f * (i / (width * width))));
+		if (y < y1 && y < y2) {
+			positions.push_back( XMFLOAT3(2.0f * x, 2.0f * y, 2.0f * z));
+			if ((y+1 < y1 && y+1 < y2)) {
+				//Is not on top				
+				uvs.push_back(XMFLOAT2{ 0.5,0.0 });
+			}
+			else {
+				//If it's high up, use the snow section of the texture
+				if (y > 20)
+					uvs.push_back(XMFLOAT2{ 0.0,0.5 });
+				else
+					uvs.push_back(XMFLOAT2{ 0.0,0.0 });
+			}
 			instanceCount++;
 		}
 	}
 
-	m_InstancedCube->initBuffers(renderer->getDevice(), &(positions.front()), instanceCount);
-
+	m_InstancedCube->initBuffers(renderer->getDevice(), &(positions.front()), &(uvs.front()), instanceCount);
 }
 
 bool App1::render()
@@ -103,7 +119,7 @@ bool App1::render()
 	projectionMatrix = renderer->getProjectionMatrix();
 
 	// Send geometry data, set shader parameters, render object with shader
-	m_InstanceShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"brick"), light.get());
+	m_InstanceShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"block"), light.get());
 	m_InstancedCube->sendDataInstanced(renderer->getDeviceContext());
 	m_InstanceShader->renderInstanced(renderer->getDeviceContext(), m_InstancedCube->getIndexCount(), m_InstancedCube->GetInstanceCount());
 	

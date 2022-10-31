@@ -61,7 +61,7 @@ private:
 	XMFLOAT3 rotation;		///< float3 for rotation (angles)
 	XMMATRIX viewMatrix;	///< matrix for current view
 	XMMATRIX orthoMatrix;	///< current orthographic matrix
-	float speed, frameTime;	///< movement speed and time variables
+	float moveSpeed, speed, frameTime;	///< movement speed and time variables
 	float lookSpeed;		///< rotation speed
 };
 

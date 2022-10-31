@@ -26,7 +26,7 @@ int InstancedCubeMesh::GetInstanceCount() {
 
 // Initialise instance buffers.
 // Generate and store cube vertices, normals and texture coordinates
-void InstancedCubeMesh::initBuffers( ID3D11Device* device, XMFLOAT3* p, UINT count ) {
+void InstancedCubeMesh::initBuffers( ID3D11Device* device, XMFLOAT3* p, XMFLOAT2* uv, UINT count ) {
 	if( m_instanceBuffer != NULL ) {
 		m_instanceBuffer->Release();
 	}
@@ -43,6 +43,7 @@ void InstancedCubeMesh::initBuffers( ID3D11Device* device, XMFLOAT3* p, UINT cou
 	// Load the instance array with data.
 	for(UINT inst = 0; inst < m_instanceCount; inst++ ) {
 		it.position = p[inst];
+		it.uv = uv[inst];
 		instances.push_back(it);
 	}
 

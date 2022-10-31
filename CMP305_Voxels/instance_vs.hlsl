@@ -7,11 +7,11 @@ cbuffer MatrixBuffer : register( b0 ) {
 };
 
 struct InputType {
-	float4 position : POSITION;
+	float4 position : POSITION0;
 	float2 tex : TEXCOORD0;
 	float3 normal : NORMAL;
-	float3 instancePosition : TEXCOORD1;
-//	float3 instanceScale : TEXCOORD2;
+	float3 instancePosition : POSITION1;
+	float2 uvPosition : TEXCOORD1;
 };
 
 struct OutputType {
@@ -23,11 +23,7 @@ struct OutputType {
 OutputType main( InputType input ) {
 	OutputType output;
 	// Update the position of the vertices based on the data for this particular instance.
-
-/*	input.position.x *= input.instanceScale.x;
-	input.position.y *= input.instanceScale.y;
-	input.position.z *= input.instanceScale.z;*/
-	
+		
 	input.position.x += input.instancePosition.x;
 	input.position.y += input.instancePosition.y;
 	input.position.z += input.instancePosition.z;
@@ -39,7 +35,7 @@ OutputType main( InputType input ) {
 	output.position = mul( output.position, projectionMatrix );
 
 	// Store the texture coordinates for the pixel shader.
-	output.tex = input.tex;
+	output.tex = (input.tex * 0.5) +input.uvPosition;
 
 	// Calculate the normal vector against the world matrix only and normalise.
 	output.normal = mul( input.normal, ( float3x3 )worldMatrix );
