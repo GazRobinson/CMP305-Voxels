@@ -4,10 +4,14 @@
 
 // Includes
 #include "DXF.h"	// include dxframework
-#include "InstanceShader.h"
-#include "LightShader.h"
-#include "InstancedCubeMesh.h"
+#include <wrl/client.h>
 #include <memory>
+
+#include "InstanceShader.h"
+#include "UnlitShader.h"
+#include "InstancedCubeMesh.h"
+#include "QuadMeshT.h"
+#include "WritableTexture.h"
 
 using std::unique_ptr;
 
@@ -29,10 +33,16 @@ private:
 	void BuildCubeInstances();
 
 private:
-	unique_ptr<InstanceShader> m_InstanceShader;
-	unique_ptr<InstancedCubeMesh> m_InstancedCube;
+	unique_ptr<InstanceShader>		m_InstanceShader;
+	unique_ptr<UnlitShader>			m_UnlitShader;
 
-	unique_ptr<Light> light;
+	unique_ptr<InstancedCubeMesh>	m_InstancedCube;
+	unique_ptr<QuadMeshT>			m_Quad;
+
+	unique_ptr<Light>				light;
+
+	unique_ptr<WritableTexture>		m_Texture;
+
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "App1.h"
 #include <vector>
+
 App1::App1()
 {
 	m_InstanceShader = nullptr;
@@ -17,6 +18,30 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	// Create Mesh object and shader object
 	m_InstancedCube = std::make_unique<InstancedCubeMesh>(renderer->getDevice(), renderer->getDeviceContext(), 1);
 	m_InstanceShader = std::make_unique<InstanceShader>(renderer->getDevice(), hwnd);
+		
+	BuildCubeInstances();
+
+	//Make unlit shader for rendering the Quad
+	m_UnlitShader = std::make_unique<UnlitShader>(renderer->getDevice(), hwnd);
+
+	//Make a 100x100 quad and move it into view
+	m_Quad = std::make_unique<QuadMeshT>(renderer->getDevice(), 50, 50);
+	m_Quad->m_Transform = XMMatrixTranslation(-50, 0, 50);
+
+	//Initialise writable texture
+	constexpr int texSize = 1024;
+	m_Texture = std::make_unique<WritableTexture>(texSize, texSize, renderer->getDevice());
+
+	//An example of how SetPixel can be used to set the value of an individual pixel
+	for (int y = 0; y < texSize; y++) {
+		for (int x = 0; x < texSize; x++) {
+			float c = (sin(x/16.0f)+1)*0.5f;
+			m_Texture->SetPixel(x, y, c, c, c, 1.0f);
+		}
+	}
+	//Make all of your changes, then call Update to update the texture resource
+	m_Texture->Update(renderer->getDeviceContext());
+
 
 	// Initialise light
 	light = std::make_unique<Light>();
@@ -27,8 +52,6 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	//Initialise Camera Position
 	camera->setPosition(-16, 60, -15);
 	camera->setRotation(25, 45, 0);
-
-	BuildCubeInstances();
 }
 
 
@@ -120,6 +143,11 @@ bool App1::render()
 	m_InstanceShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"block"), light.get());
 	m_InstancedCube->sendDataInstanced(renderer->getDeviceContext());
 	m_InstanceShader->renderInstanced(renderer->getDeviceContext(), m_InstancedCube->getIndexCount(), m_InstancedCube->GetInstanceCount());
+	
+	//we can multiply the world transform by the object's transform to move it into position
+	m_UnlitShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix * m_Quad->m_Transform, viewMatrix, projectionMatrix, m_Texture->GetTextureView());
+	m_Quad->sendData(renderer->getDeviceContext());
+	m_UnlitShader->render(renderer->getDeviceContext(), m_Quad->getIndexCount());
 	
 	// Render GUI
 	gui();
